@@ -1,0 +1,4 @@
+# Ignore the data folder when building the image
+data
+.git
+
