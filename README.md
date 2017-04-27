@@ -19,7 +19,7 @@ If you use this project or parts of it in your research, please cite the origina
     }
 
 
-See the [paper website](http://lmb.informatik.uni-freiburg.de/Publications/2016/MIFDB16) for more details.
+See the [paper website](https://lmb.informatik.uni-freiburg.de/Publications/2017/IMKDB17) for more details.
 
 
 ## 0. Requirements
