@@ -57,6 +57,7 @@ RUN apt-get update && \
     rm -rf .git && \
     cd models && \
     bash download-models.sh && \
+    rm flownet2-models.tar.gz && \
     cd .. && \
     make -j`nproc` && \
     make -j`nproc` pycaffe && \
