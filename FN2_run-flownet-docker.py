@@ -107,8 +107,8 @@ for i in range(len(output_files)):
 
     if not args.verbose:
         caffe.set_logging_disabled()
-    caffe.set_mode_gpu()
     caffe.set_device(args.gpu)
+    caffe.set_mode_gpu()
     net = caffe.Net(tmp.name, args.caffemodel, caffe.TEST)
 
   input_dict = {}
