@@ -1,11 +1,6 @@
 ## Note: Our Caffe version does not work with CuDNN 6
 FROM nvidia/cuda:8.0-cudnn5-devel-ubuntu16.04
 
-## Hardcoded driver version, feel free to test another version!
-ARG CUDA_DRIVER_VER
-ENV CUDA_DRIVER_RUN="NVIDIA-Linux-x86_64-${CUDA_DRIVER_VER}.run" 
-ENV FLOWNET2_TAR="flownet2-release-docker.tar.gz"
-
 ## Put everything in some subfolder
 WORKDIR "/flownet2"
 
@@ -45,10 +40,6 @@ RUN apt-get update && \
         python-protobuf \
         python-pillow \
         python-skimage && \
-\
-    wget --progress=bar:force:noscroll http://us.download.nvidia.com/XFree86/Linux-x86_64/${CUDA_DRIVER_VER}/${CUDA_DRIVER_RUN} && \
-    bash $CUDA_DRIVER_RUN -s -N --no-kernel-module && \
-    rm $CUDA_DRIVER_RUN && \
 \
     git clone https://github.com/lmb-freiburg/flownet2 && \
     cp ./FN2_Makefile.config ./flownet2/Makefile.config && \
