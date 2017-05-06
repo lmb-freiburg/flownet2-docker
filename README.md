@@ -47,7 +47,7 @@ Make sure you have read/write rights for the current folder. Run the `run-networ
 
 ### 2.2 Optical flow for entire lists of images
 - we use the lean *FlowNet2-s* variant for maximum speed
-- we want to use the second GPU on a multi-GPU system (i.e. the GPU with index "1" as reported by `nvidia-smi`)
+- we want to use GPU "1" on a multi-GPU system
 - we want to see the full network stdout printfest
 
 > $ ./run-network.sh -n FlowNet2-s -g 1 -vv data/flow-first-images.txt data/flow-second-images.txt data/flow-outputs.txt
