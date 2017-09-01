@@ -55,6 +55,8 @@ fun__print_usage () {
   printf "  FlowNet2-ss\n";
   printf "  FlowNet2-SS\n";
   printf "  FlowNet2-sss\n";
+  printf "  FlowNet2-KITTI\n";
+  printf "  FlowNet2-Sintel\n";
 }
 
 ## Parameters (some hardcoded, others user-settable)
@@ -131,6 +133,8 @@ case "${NETWORK}" in
   "FlowNet2-ss")        ;;
   "FlowNet2-SS")        ;;
   "FlowNet2-sss")       ;;
+  "FlowNet2-KITTI")     ;;
+  "FlowNet2-Sintel")    ;;
   *) fun__error_printf "Unknown network: ${NETWORK} (run with -h to print available networks)";
      fun__die;;
 esac
