@@ -10,12 +10,19 @@ import tempfile
 from math import ceil
 
 
-def dockerize_filepath(path):
+def dockerize_filepath_input(path):
     """
-    Convert a given filepath to be relative to the input-output folder that this
+    Convert a given filepath to be relative to the inputfolder that this
     container gets from the host system.
     """
-    return os.path.join('/input-output', path)
+    return os.path.join('/input', path)
+
+def dockerize_filepath_output(path):
+    """
+    Convert a given filepath to be relative to the output folder that this
+    container gets from the host system.
+    """
+    return os.path.join('/output', path)
 
 def readFlow(name):
     if name.endswith('.pfm') or name.endswith('.PFM'):
@@ -58,13 +65,13 @@ if(not os.path.isfile(args.caffemodel)): raise BaseException('caffemodel does no
 if(not os.path.isfile(args.deployproto)): raise BaseException('deploy-proto does not exist: '+args.deployproto)
 
 if args.img0.endswith('.txt'):
-  input_files = [[dockerize_filepath(f.strip()) for f in open(dockerize_filepath(args.img0)).readlines()],
-                 [dockerize_filepath(f.strip()) for f in open(dockerize_filepath(args.img1)).readlines()]]
-  output_files = [dockerize_filepath(f.strip()) for f in open(dockerize_filepath(args.out)).readlines()]
+  input_files = [[dockerize_filepath_input(f.strip()) for f in open(dockerize_filepath_input(args.img0)).readlines()],
+                 [dockerize_filepath_input(f.strip()) for f in open(dockerize_filepath_input(args.img1)).readlines()]]
+  output_files = [dockerize_filepath_output(f.strip()) for f in open(dockerize_filepath_input(args.out)).readlines()]
 else:
-  input_files = [[dockerize_filepath(args.img0),],
-                 [dockerize_filepath(args.img1),]]
-  output_files = [dockerize_filepath(args.out),]
+  input_files = [[dockerize_filepath_input(args.img0),],
+                 [dockerize_filepath_input(args.img1),]]
+  output_files = [dockerize_filepath_output(args.out),]
 
 for i in range(len(output_files)):
   in0 = input_files[0][i]

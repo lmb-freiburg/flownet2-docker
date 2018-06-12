@@ -61,7 +61,7 @@ fun__print_usage () {
 
 ## Parameters (some hardcoded, others user-settable)
 GPU_IDX=0;
-CONTAINER="flownet2";
+CONTAINER="flownet2-ft";
 NETWORK="";
 VERBOSITY=0;
 
@@ -150,21 +150,32 @@ fun__debug_printf "Second input:    ${SECOND_INPUT}";
 fun__debug_printf "Output:          ${OUTPUT}";
 
 
+## The command depends on the version of nvidia-docker
+dummy=`which nvidia-docker`;
+if test $? -eq 0; then
+  DOCKER_CMD='nvidia-docker run';
+else
+  DOCKER_CMD='docker run --runtime=nvidia';
+fi
+
+
 ## Run docker container
 #  - "--device" lines map a specified host GPU into the contained
 #  - "-v" allows the container the read from/write to the current $PWD
 #  - "-w" executes "cd" in the container (each network has a folder)
 ## Note: The ugly conditional only switches stdout on/off.
 if test $VERBOSITY -ge 2; then
-  nvidia-docker run \
+  ${DOCKER_CMD} \
     --rm \
-    --volume "${PWD}:/input-output:rw" \
+    --volume "${PWD}:/input:ro" \
+    --volume "${PWD}:/output:rw" \
     --workdir "${WORKDIR}" \
     -it "$CONTAINER" /bin/bash -c "cd ..; source set-env.sh; cd -; python run-flownet-docker.py --verbose --gpu ${GPU_IDX} ${WEIGHTS} ${DEPLOYPROTO} ${FIRST_INPUT} ${SECOND_INPUT} ${OUTPUT}"
 else
-  nvidia-docker run \
+  ${DOCKER_CMD} \
     --rm \
-    --volume "${PWD}:/input-output:rw" \
+    --volume "${PWD}:/input:ro" \
+    --volume "${PWD}:/output:rw" \
     --workdir "${WORKDIR}" \
     -it "$CONTAINER" /bin/bash -c "cd ..; source set-env.sh; cd -; python run-flownet-docker.py --gpu ${GPU_IDX} ${WEIGHTS} ${DEPLOYPROTO} ${FIRST_INPUT} ${SECOND_INPUT} ${OUTPUT}"
     > /dev/null;
