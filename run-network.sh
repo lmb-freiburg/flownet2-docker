@@ -61,7 +61,7 @@ fun__print_usage () {
 
 ## Parameters (some hardcoded, others user-settable)
 GPU_IDX=0;
-CONTAINER="flownet2-ft";
+CONTAINER="flownet2";
 NETWORK="";
 VERBOSITY=0;
 
