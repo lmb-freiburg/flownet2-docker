@@ -9,10 +9,6 @@ WORKDIR "/flownet2"
 COPY FN2_Makefile.config ./
 COPY FN2_run-flownet-docker.py ./
 
-## Container's mount point for the host's input/output folder(s)
-VOLUME "/input"
-VOLUME "/output"
-
 ## Switch to non-root user 
 ARG uid
 ARG gid
